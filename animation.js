@@ -1,6 +1,7 @@
 var startXPos = 100;
 var startYPos = 50;
 var drawing = false;
+var letterCount = 0;
 var availableLetters = {
     "A": true,
     "B": true,
@@ -30,42 +31,23 @@ var availableLetters = {
     "Z": true
 }
 
-document.addEventListener("click", function() {
-    if (drawing == false) {
-      console.log("started vivus?")
-        drawing = true;
-        new Vivus('svgA', {
-            duration: 200
-        }, function() {
-            $(function() {
-                jQuery.Color.hook("fill");
-            })
-        });
-        setTimeout(function() {
-            drawing = false;
-        }, 2000)
-    }
-});
-
 document.addEventListener("keyup", function(e) {
-  if(availableLetters[String.fromCharCode(e.keyCode).toUpperCase()] && drawing == false) {
+  if(availableLetters[String.fromCharCode(e.keyCode).toUpperCase()]) {
     drawing = true;
     var pressedLetter = $('svg' + String.fromCharCode(e.keyCode).toUpperCase());
     var clonedLetter = $('svg#svg' + String.fromCharCode(e.keyCode).toUpperCase()).clone();
-    clonedLetter.attr('id', 'current');
-
+    clonedLetter.attr('id', 'current' + letterCount);
     $('body').append(clonedLetter);
 
-    new Vivus('current', {
-        duration: 200
+    new Vivus('current' + letterCount , {
+        duration: 100
     }, function() {
-        clonedLetter.attr('id', '')
         $(function() {
           console.log("Started new Vivus");
             jQuery.Color.hook("fill");
-            //$('letterA').toggleClass('path', 1000)
-            clonedLetter.attr('id', '')
-            drawing = false;
+            $('#current' + letterCount).children().find('#letter' + String.fromCharCode(e.keyCode).toUpperCase()).toggleClass('filler', 1000)
+            console.log(letterCount)
+            letterCount++;
         })
     });
   }
