@@ -1,0 +1,11 @@
+.default {
+  fill:#0000FF;
+}
+.red {
+  fill:#FF0000;
+}
+.path {
+shape-rendering: crispEdges;
+   /*stroke:url(#MyGradient);*/
+   stroke: red;
+}
